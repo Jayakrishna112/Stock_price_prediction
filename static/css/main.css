@@ -1,0 +1,152 @@
+*{
+    font-family:'Open Sans';
+    font-size: 20px;
+    color: #38bdf8;
+}
+
+body{
+    background-color: #000000;
+}
+
+.Candle_plot{
+    height: 100vh;
+}
+.Model_prediction{
+    height: 100vh;
+}
+
+div{
+    display: grid;
+}
+
+.title{
+    margin: 0;
+    padding-top: 0%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+}
+
+.formDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12vh;
+}
+
+.customDetail {
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 5px;
+    /* box-shadow: 0 2px 4px rgb(237, 215, 215); */
+    display: flex;
+    align-items: center;
+    color : white;
+}
+
+label {
+    margin: 10px 20px;
+    background-color: black;
+}
+
+button{
+    color: white;
+    border: none;
+    transition: all 0s;
+}
+#Get {
+    background-color: #a41ffc;
+    color: white;
+    padding: 10px 20px;
+    text-shadow: 1px 1px 2px #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    /* color:rgb(40, 57, 55); */
+}
+
+#Get:hover {
+    background-color: #4df6d7;
+    /* box-shadow: 5px 5px 5px rgb(255, 255, 255); */
+    box-shadow: 0px -15px 15px -15px rgb(66, 164, 245),
+                15px 0px 15px -15px rgb(66, 164, 243),
+                0px 15px 15px -15px rgb(66, 164, 224),
+                -15px 0px 15px -15px rgb(66, 35, 212);
+    transition: all 0s;
+}
+
+.hoverButton:hover{
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 1px 1px 2px #ffffff;
+    transition:all 0s;
+}
+
+h1{
+    color : white;
+    text-align: center;
+    height: 15%;
+    font-size: 30px;
+    display: grid;
+}
+
+input[type=checkbox]{
+    visibility: hidden;
+}
+
+.active-color{
+    background-color: #00b0a4;
+    border-radius: 4px;
+}
+
+.normal-color{
+    background-color: #000000;
+}
+
+.hidden{
+    opacity: 0;
+    filter: blur(1px);
+    transform: translateX(-100%);
+    transition: all 2s;
+}
+
+.show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+
+.footerDiv {
+    text-align: right;
+    background-color: #1B1F24;
+}
+.myfooter h1{
+    background-color: #1B1F24;
+}
+ul{
+    list-style: none;
+    background-color: #1B1F24;
+}
+p{
+    margin: 5px 0;
+    padding-right: 130px;
+    background-color: #1B1F24;
+}
+li {
+    margin: 5px 0;
+    background-repeat: no-repeat;
+    background-position: 100% .9em;
+    padding-right: 130px;
+    background-color: #1B1F24;
+}
+
+.myfooter{
+    background-color: #1B1F24;
+}
+
+.selector_rect{
+    fill: black;
+}

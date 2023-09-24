@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script defer src = "{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+<body>
+    <div id = 'projectTitle' class = 'title hidden'>
+        <h1>Time Series Forecasting of Stocks and Derivatives using Facebook Prophet</h1>
+    </div>
+    <h1 class = 'hidden'>Stock Price Flow</h1>
+    <div class = 'Candle_plot hidden'>
+        <div id="candlestick_chart">{{plot | safe}}</div>
+    </div>
+    <h1 class = 'hidden'>Stock Price Prediction</h1>
+    <div id="options" class = 'formDiv hidden'>
+    <form action="details" method="post" id="details" class = 'customDetail'>
+        <label for="trend">
+            <button class='hoverButton normal-color hidden' id="trendButton" type="button">Trend</button>
+            <input type="checkbox" id="trendCheckbox" name="trend">
+        </label>
+        <label for="intervals">
+            <button class="hoverButton normal-color hidden" id="intervalsButton" type="button">Uncertainty Intervals</button>
+            <input type="checkbox" id="intervalsCheckbox" name="intervals">
+        </label>
+        <button type="submit" id="Get" class = 'hidden'>Get</button>
+    </form>
+</div>
+
+
+    <div class = 'Model_prediction hidden'>
+        <div id = 'Predicted_Graph'>{{predicted | safe}}</div>
+    </div>
+<script>
+    $(document).ready(function() {
+        $('#trendButton').click(function() {
+            $('#trendCheckbox').prop('checked', function(_, checked) {
+                return !checked;
+            });
+            $(this).toggleClass('active-color normal-color');
+        });
+
+        $('#intervalsButton').click(function() {
+            $('#intervalsCheckbox').prop('checked', function(_, checked) {
+                return !checked;
+            });
+            $(this).toggleClass('active-color normal-color');
+        });
+    });
+</script>
+
+<footer class = 'myfooter'>
+    <h1>Time Series Forecasting of Stocks and Derivatives using Facebook Prophet</h1>
+
+    <div class = 'footerDiv hidden'>
+        <p>By TEAM PIRATES</p>
+    <ul>
+        <li>M. Jaya Krishna</li>
+        <li>M. Venkata Rama Reddy</li>
+        <li>M. Sai Sindhu</li>
+        <li>G. Pavan Sai Ventakesh</li>
+    </ul>
+    </div>
+</footer>
+
+</body>
+</html>
+
