@@ -17,7 +17,7 @@ scheduler.init_app(app)
 my_schedule = Scheduler()
 
 if my_schedule.df is None and my_schedule.model is None:
-    my_task(my_schedule)
+    my_schedule.pre_loader()
 
 candle_plot = PlotPlotly()
 predict_plot = ModelPlotPlotly()
@@ -57,8 +57,11 @@ def detailer():
 
 @scheduler.task('cron', id='my_scheduled_task', day_of_week='mon-fri', hour=17)
 def scheduled_task():
+    global fig1, fig2
     arg1 = my_schedule  # Set your argument here
     my_task(arg1)
+    fig1 = candle_plot.plotting_data(df=my_schedule.df).to_html(full_html=False)
+    fig2 = predict_plot.plot_plotly(my_schedule.model).to_html(full_html=False)
 
 
 if __name__ == '__main__':
