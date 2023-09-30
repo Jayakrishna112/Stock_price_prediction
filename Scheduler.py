@@ -12,8 +12,15 @@ class Scheduler:
 
     def schedule(self):
         helper = HelperClass()
-        if time.strftime("%H:%M") == '17::00':
-            helper.data_uploader()
+        print('activated')
+        helper.data_uploader()
+        helper.Data_loader()
+        self.df = copy.deepcopy(helper.data)
+        helper.model_trainer()
+        self.model = helper.model
+
+    def pre_loader(self):
+        helper = HelperClass()
         helper.Data_loader()
         self.df = copy.deepcopy(helper.data)
         helper.model_trainer()
