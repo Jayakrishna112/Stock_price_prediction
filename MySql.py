@@ -16,6 +16,7 @@ class MySql:
             self.__server = 'tcp:mysqlserver1330.database.windows.net'
             self.__db_user = 'azureuser'
             self.db_driver = '{ODBC Driver 18 for SQl Server}'
+            self.db_driver ='{ODBC Driver 18 for SQl Server}'
             self.connection_string = (f'DRIVER={self.db_driver};SERVER={self.__server};'
                                       f'DATABASE={self.__db_name};UID={self.__db_user};'
                                       f'PWD={self.__password}')
