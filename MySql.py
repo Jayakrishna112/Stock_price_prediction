@@ -1,6 +1,5 @@
 import pyodbc
 from pandas import read_sql
-from decouple import config
 import logging as lg
 
 
@@ -12,11 +11,11 @@ class MySql:
     def __init__(self):
         try:
             lg.basicConfig(filename='logfile.log', level=lg.INFO, format='%(asctime)s %(message)s')
-            self.__password = config('DB_PASSWORD')
-            self.__db_name = config('DB_NAME')
-            self.__server = config('SERVER')
-            self.__db_user = config('DB_USER')
-            self.db_driver = config('DB_DRIVER')
+            self.__password = 'Invalid@1330'
+            self.__db_name = 'msqldatabase'
+            self.__server = 'tcp:mysqlserver1330.database.windows.net'
+            self.__db_user = 'azureuser'
+            self.db_driver = '{ODBC Driver 18 for SQl Server}'
             self.connection_string = (f'DRIVER={self.db_driver};SERVER={self.__server};'
                                       f'DATABASE={self.__db_name};UID={self.__db_user};'
                                       f'PWD={self.__password}')
@@ -76,7 +75,7 @@ class MySql:
         else:
             self.MyExecutor(mydata)
 
-        self._connection.close()
+        self.disconnect()
 
     def disconnect(self):
         try:

@@ -18,7 +18,7 @@ class DataExtractor:
         lg.basicConfig(filename="logfile.log", level=lg.INFO, format='%(asctime)s %(message)s')
         self.__completed = False
         __delta = datetime.timedelta(days=1)
-        _today = datetime.datetime.today() - __delta
+        _today = datetime.datetime.today()
         self.end_date = int(datetime.datetime.timestamp(_today))
         self.start_date = int(datetime.datetime.timestamp(_today - __delta))
 
@@ -62,16 +62,19 @@ class DataExtractor:
             lg.error('Error in DataExtractor.table_convertor() :', e)
 
     def MyExecutor(self):
-        if not self.__completed:
-            self.url_modifier(self.start_date, self.end_date)
+        try:
+            if not self.__completed:
+                self.url_modifier(self.start_date, self.end_date)
 
-            while not self._connected:
-                self.client_connector()
+                while not self._connected:
+                    self.client_connector()
 
-            self.html_parser()
+                self.html_parser()
 
-            self.section_selector()
+                self.section_selector()
 
-            self.table_convertor()
+                self.table_convertor()
 
-            return self.Stocks_data
+                return self.Stocks_data
+        except ... as e:
+            print(str(e))

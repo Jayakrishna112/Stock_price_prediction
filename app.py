@@ -1,18 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_apscheduler import APScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from Scheduler import Scheduler, my_task
 from plot_plotly_user import PlotPlotly, ModelPlotPlotly
 import warnings
 
 warnings.filterwarnings("ignore")
 
-
 app = Flask(__name__)
 
-# Configure the Flask-APScheduler extension
-app.config['SCHEDULER_API_ENABLED'] = True
-scheduler = APScheduler()
-scheduler.init_app(app)
+scheduler = BackgroundScheduler()
+scheduler.start()
 
 my_schedule = Scheduler()
 
@@ -55,10 +52,10 @@ def detailer():
         return redirect(url_for('index'))
 
 
-@scheduler.task('cron', id='my_scheduled_task', day_of_week='mon-fri', hour=17)
+@scheduler.scheduled_job('cron', id='my_scheduled_task', day_of_week='mon-fri', hour=17)
 def scheduled_task():
     global fig1, fig2
-    arg1 = my_schedule  # Set your argument here
+    arg1 = my_schedule
     my_task(arg1)
     fig1 = candle_plot.plotting_data(df=my_schedule.df).to_html(full_html=False)
     fig2 = predict_plot.plot_plotly(my_schedule.model).to_html(full_html=False)

@@ -12,7 +12,6 @@ class Scheduler:
 
     def schedule(self):
         helper = HelperClass()
-        print('activated')
         helper.data_uploader()
         helper.Data_loader()
         self.df = copy.deepcopy(helper.data)
