@@ -15,17 +15,18 @@ class HelperClass:
         mysql.connect()
         # extracting data from the database
         self.data = mysql.data_loader()
-        
+
         mysql.disconnect()
 
     def model_trainer(self):
 
         holiday_class = Holidays()
 
-        holidays = holiday_class.calculate(self.data.iloc[0][0], self.data.iloc[-1][0])
+        holidays = holiday_class.calculate(
+            self.data.iloc[0][0], self.data.iloc[-1][0])
 
         model_class = ModelTrainer()
-        
+
         self.model = model_class.build_model(holidays)
 
         model_class.model_fit(self.model, self.data)
@@ -38,9 +39,8 @@ class HelperClass:
 
             today_data = daily_data.MyExecutor()
             self.data = None
-            if not today_data.empty:
-                today_data_list = list(today_data.iloc[0])
-                my_sql.MyExecutor(today_data_list)
+            if len(today_data) != 0:
+                my_sql.MyExecutor(today_data)
 
         except Exception as e:
             print(e)
