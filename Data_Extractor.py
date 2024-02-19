@@ -1,7 +1,7 @@
 import datetime
 import logging as lg
 import urllib3
-from pandas import read_html, to_datetime, errors
+from pandas import to_datetime, errors
 from bs4 import BeautifulSoup as Bs
 
 
@@ -15,19 +15,17 @@ class DataExtractor:
     Stocks_data = None
 
     def __init__(self):
-        lg.basicConfig(filename="logfile.log", level=lg.INFO, format='%(asctime)s %(message)s')
+        lg.basicConfig(filename="logfile.log", level=lg.INFO,
+                       format='%(asctime)s %(message)s')
+        self._today = datetime.datetime.today()
         self.__completed = False
-        __delta = datetime.timedelta(days=1)
-        _today = datetime.datetime.today()
-        self.end_date = int(datetime.datetime.timestamp(_today))
-        self.start_date = int(datetime.datetime.timestamp(_today - __delta))
 
     def url_modifier(self, start, end):
         try:
-            self.url = (f'https://in.investing.com/indices/s-p-cnx-nifty-historical-data?'
-                        f'end_date={end}&st_date={start}&interval_sec=daily')
+            self.url = (
+                f'https://www.investing.com/indices/s-p-cnx-nifty-historical-data')
         except Exception as e:
-            lg.exception('Exception in DataExtractor.url_modifier() :',e)
+            lg.exception('Exception in DataExtractor.url_modifier() :', e)
 
     def client_connector(self):
         try:
@@ -47,18 +45,27 @@ class DataExtractor:
 
     def section_selector(self):
         try:
-            self.html_table = self.parsed_data.find_all('section',
-                                                        {'class': 'js-table-wrapper common-table-comp scroll-view'})
+            self.html_table = self.parsed_data.find_all('tabel',
+                                                        {'class': 'w-full text-xs leading-4 overflow-x-auto freeze-column-w-1'})
 
         except Exception as e:
             lg.exception('Exception in DataExtractor.section_selector() :', e)
 
     def table_convertor(self):
         try:
-            self.Stocks_data = read_html(str(self.html_table[0]))[0]
-            self.Stocks_data["Date"] = to_datetime(self.Stocks_data['Date'])
-            self.Stocks_data.drop(columns=['Volume', 'Chg%'], inplace=True)
-        except errors as e:
+            data = []
+            for row in self.html_table.find_all('tr')[1:]:
+                row_data = [td.text.strip() for td in row.find_all('td')]
+                data.append(row_data)
+            self.Stocks_data = data[0][:-2]
+            self.Stocks_data[0] = to_datetime(self.Stocks_data[0])
+            self.Stocks_data[1] = float(self.Stocks_data[1].replace(',', ''))
+            self.Stocks_data[2] = float(self.Stocks_data[2].replace(',', ''))
+            self.Stocks_data[3] = float(self.Stocks_data[3].replace(',', ''))
+            self.Stocks_data[4] = float(self.Stocks_data[4].replace(',', ''))
+            if self.Stocks_data[0] != self._today:
+                self.Stocks_data = []
+        except ... as e:
             lg.error('Error in DataExtractor.table_convertor() :', e)
 
     def MyExecutor(self):
