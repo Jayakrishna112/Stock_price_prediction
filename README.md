@@ -29,5 +29,4 @@ Time Series forecasting of Stock and Derivatives using Facebook Prophet
 
 [Stock Price Prediction](https://stockpriceprediction.azurewebsites.net)
 
-<iframe data="https://stockpriceprediction.azurewebsites.net" width=100%>
-</iframe>
+<iframe data="https://stockpriceprediction.azurewebsites.net" width=100%></iframe>
