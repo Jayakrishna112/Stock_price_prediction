@@ -20,7 +20,8 @@ class DataExtractor:
         self._today = datetime.datetime.today()
         self.__completed = False
 
-    def url_modifier(self, start, end):
+    def url_modifier(self):
+        # start =
         try:
             self.url = (
                 f'https://www.investing.com/indices/s-p-cnx-nifty-historical-data')
@@ -45,8 +46,8 @@ class DataExtractor:
 
     def section_selector(self):
         try:
-            self.html_table = self.parsed_data.find_all('tabel',
-                                                        {'class': 'w-full text-xs leading-4 overflow-x-auto freeze-column-w-1'})
+            self.html_table = self.parsed_data.find_all('table',
+                                                        {'class': 'freeze-column-w-1 w-full overflow-x-auto text-xs leading-4'})
 
         except Exception as e:
             lg.exception('Exception in DataExtractor.section_selector() :', e)
@@ -54,7 +55,7 @@ class DataExtractor:
     def table_convertor(self):
         try:
             data = []
-            for row in self.html_table.find_all('tr')[1:]:
+            for row in self.html_table[0].find_all('tr')[1:]:
                 row_data = [td.text.strip() for td in row.find_all('td')]
                 data.append(row_data)
             self.Stocks_data = data[0][:-2]
@@ -63,7 +64,7 @@ class DataExtractor:
             self.Stocks_data[2] = float(self.Stocks_data[2].replace(',', ''))
             self.Stocks_data[3] = float(self.Stocks_data[3].replace(',', ''))
             self.Stocks_data[4] = float(self.Stocks_data[4].replace(',', ''))
-            if self.Stocks_data[0] != self._today:
+            if self.Stocks_data[0].to_pydatetime().date() != self._today.date():
                 self.Stocks_data = []
         except ... as e:
             lg.error('Error in DataExtractor.table_convertor() :', e)
@@ -71,7 +72,7 @@ class DataExtractor:
     def MyExecutor(self):
         try:
             if not self.__completed:
-                self.url_modifier(self.start_date, self.end_date)
+                self.url_modifier()
 
                 while not self._connected:
                     self.client_connector()
@@ -85,3 +86,4 @@ class DataExtractor:
                 return self.Stocks_data
         except ... as e:
             print(str(e))
+
